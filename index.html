@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الاختبارات</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 1.2em;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .btn:hover {
+            background: white;
+            color: #764ba2;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .icon {
+            margin-left: 10px;
+        }
+
+        /* زر الواتساب العائم */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128c7e;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>مادةاساليب كميه و اتخاذ قرار</h1>
+        
+        <!-- رابط لصفحة الاختيارات -->
+        <a href="Quiz.html" class="btn">
+            <span class="icon">📝</span> أسئلة الاختيارات
+        </a>
+
+        <!-- رابط لصفحة الصح والخطأ -->
+        <a href="TrueFalse.html" class="btn">
+            <span class="icon">✅</span>  من اول مثال (1) (صفحه 41)
+        </a>
+        <h1>تم بواسطه بسام وليد 
+            لا تنسونا من دعواتكم 
+        </h1>
+    </div>
+
+    <!-- زر واتساب -->
+    <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
+        <svg style="width: 35px; height: 35px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
+        </svg>
+    </a>
+
+</body>
+</html>
