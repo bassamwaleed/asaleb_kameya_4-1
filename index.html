@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة الاختبارات</title>
+    <title>مادةاساليب كميه و اتخاذ قرار</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
         body {
             font-family: 'Tajawal', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #fff;
+            position: relative;
         }
 
         .container {
@@ -28,12 +29,33 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
             width: 90%;
             max-width: 400px;
+            margin-top: 60px; /* مسافة لعدم التداخل مع التنبيه */
         }
 
         h1 {
             margin-bottom: 30px;
             font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* تنسيق التنبيه العلوي */
+        .header-note {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            color: #ffcccc;
+            font-size: 0.95em;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            z-index: 10;
+            font-weight: bold;
         }
 
         .btn {
@@ -63,20 +85,46 @@
             margin-left: 10px;
         }
 
-        /* زر الواتساب العائم */
-        .whatsapp-float {
+        /* تنسيق الفوتر */
+        .footer-text {
+            margin-top: 30px;
+            font-size: 1.1em; /* حجم خط مناسب */
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .footer-text h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .footer-text p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+        }
+
+        /* حاوية واتساب والنص */
+        .whatsapp-container {
             position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* زر الواتساب */
+        .whatsapp-float {
             width: 60px;
             height: 60px;
-            bottom: 30px;
-            right: 30px;
             background-color: #25d366;
             color: #FFF;
             border-radius: 50%;
             text-align: center;
             font-size: 30px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -88,9 +136,27 @@
             background-color: #128c7e;
             transform: scale(1.1);
         }
+
+        /* النص أسفل الزر */
+        .whatsapp-text {
+            font-size: 11px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 8px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 120px;
+            line-height: 1.4;
+            backdrop-filter: blur(4px);
+        }
     </style>
 </head>
 <body>
+
+    <!-- التنبيه في أعلى الصفحة -->
+    <div class="header-note">
+        ⚠️ تنبيه: لا تعتمد على هذا الموقع كلياً، الهدف منه مراجعة ما ذاكرته من بنك الأسئلة.
+    </div>
 
     <div class="container">
         <h1>مادةاساليب كميه و اتخاذ قرار</h1>
@@ -102,19 +168,26 @@
 
         <!-- رابط لصفحة الصح والخطأ -->
         <a href="TrueFalse.html" class="btn">
-            <span class="icon">✅</span>  من اول مثال (1) (صفحه 41)
+       <span class="icon">✅</span>  من اول مثال (1) (صفحه 41)
+
         </a>
-        <h1>تم بواسطه بسام وليد 
-            لا تنسونا من دعواتكم 
-        </h1>
+
+        <!-- النص في الأسفل -->
+        <div class="footer-text">
+            <h3>تم بواسطه بسام وليد</h3>
+            <p>لا تنسونا من دعواتكم ❤️</p>
+        </div>
     </div>
 
-    <!-- زر واتساب -->
-    <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
-        <svg style="width: 35px; height: 35px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
-        </svg>
-    </a>
+    <!-- مجموعة واتساب (الزر + النص) -->
+    <div class="whatsapp-container">
+        <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
+            <svg style="width: 35px; height: 35px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
+            </svg>
+        </a>
+        <div class="whatsapp-text">تواصل معنا عبر واتساب إذا لاحظت مشكلة</div>
+    </div>
 
 </body>
 </html>
