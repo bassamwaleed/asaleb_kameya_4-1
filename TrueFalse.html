@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>امتحان اساليب كميه واتخاز القرار</title>
+    <title>امتحان اساليب كميه</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
@@ -31,9 +31,36 @@
 
         h2 {
             color: #4a4a4a;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             border-bottom: 2px solid #eee;
             padding-bottom: 15px;
+        }
+
+        /* تنسيق زر الترتيب */
+        .shuffle-btn {
+            background-color: #f0f2f5;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .shuffle-btn:hover {
+            background-color: #e2e6ea;
+        }
+
+        .shuffle-btn.active {
+            background-color: #667eea;
+            color: white;
+            border-color: #667eea;
         }
 
         .question-number {
@@ -52,6 +79,7 @@
             color: #2c3e50;
             font-weight: bold;
             line-height: 1.5;
+            text-align: center; 
         }
 
         .options {
@@ -72,6 +100,7 @@
             color: #555;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
 
         .option-btn:hover:not(:disabled) {
@@ -118,6 +147,44 @@
             color: #764ba2;
         }
 
+        /* تنسيق قائمة الأخطاء */
+        .mistakes-container {
+            text-align: right;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .mistake-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-right: 4px solid #dc3545;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .mistake-q {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .mistake-wrong {
+            color: #dc3545;
+            font-size: 0.95em;
+        }
+
+        .mistake-correct {
+            color: #28a745;
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+
         /* شريط التقدم */
         .progress-bar {
             height: 6px;
@@ -132,20 +199,29 @@
             width: 0%;
             transition: width 0.3s ease;
         }
-          /* زر الواتساب العائم */
-        .whatsapp-float {
+
+        /* حاوية واتساب والنص */
+        .whatsapp-container {
             position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* زر الواتساب */
+        .whatsapp-float {
             width: 60px;
             height: 60px;
-            bottom: 30px;
-            right: 30px;
             background-color: #25d366;
             color: #FFF;
             border-radius: 50%;
             text-align: center;
             font-size: 30px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -157,11 +233,29 @@
             background-color: #128c7e;
             transform: scale(1.1);
         }
+
+        /* النص أسفل الزر */
+        .whatsapp-text {
+            font-size: 11px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 8px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 120px;
+            line-height: 1.4;
+            backdrop-filter: blur(4px);
+        }
     </style>
 </head>
 <body>
 
     <div class="quiz-card">
+        <!-- زر التبديل بين العشوائي والمرتب -->
+        <button id="shuffle-btn" class="shuffle-btn" onclick="toggleShuffle()">
+            <span>🔢</span> ترتيب الأسئلة: مرتب
+        </button>
+
         <div class="progress-bar">
             <div class="progress-fill" id="progress-fill"></div>
         </div>
@@ -179,11 +273,19 @@
         <a href="index.html" class="back-btn">← العودة للقائمة الرئيسية</a>
     </div>
 
+    <!-- مجموعة واتساب -->
+    <div class="whatsapp-container">
+        <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
+            <svg style="width: 35px; height: 35px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
+            </svg>
+        </a>
+        <div class="whatsapp-text">تواصل معنا عبر واتساب إذا لاحظت مشكلة</div>
+    </div>
+
     <script>
-        const questions = [
-            
-        
-        {
+        const originalQuestions = [
+         {
             "t": "في مسألة النقل (طريقة أقل تكلفة): عدد الوحدات التي يتم نقلها من مخزن 1 إلى مركز تسويق 3 يساوي:",
             "o": ["20", "70", "0", "30"],
             "a": 0
@@ -678,32 +780,80 @@
             "o": ["يعتمد على تقديرات زمنية ثلاثية", "يستخدم لحساب تكلفة الأنشطة", "يساعد في تحديد المسار الحرج", "يتعامل مع عدم اليقين في تقديرات الزمن"],
             "a": 1
         },
-       
-
         ];
 
+        // تعيين الأرقام التعريفية للأسئلة
+        originalQuestions.forEach((q, index) => {
+            q.id = index + 1;
+        });
+
+        // مصفوفة الأسئلة الحالية (قابلة للتغيير)
+        let questions = [...originalQuestions];
         let currentQuestion = 0;
         let score = 0;
+        let isRandom = false; // حالة الترتيب
+        let wrongAnswers = []; // لتخزين الإجابات الخاطئة
 
-        // تحديث العدد الكلي للأسئلة في الواجهة
+        // تحديث العدد الكلي للأسئلة
         document.getElementById('q-total').innerText = questions.length;
+
+        // دالة تبديل الترتيب
+        function toggleShuffle() {
+            isRandom = !isRandom;
+            const btn = document.getElementById('shuffle-btn');
+            
+            if (isRandom) {
+                // خلط الأسئلة
+                for (let i = questions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [questions[i], questions[j]] = [questions[j], questions[i]];
+                }
+                btn.innerHTML = "<span>🔀</span> ترتيب الأسئلة: عشوائي";
+                btn.classList.add('active');
+            } else {
+                // إعادة الترتيب الأصلي
+                questions = [...originalQuestions];
+                btn.innerHTML = "<span>🔢</span> ترتيب الأسئلة: مرتب";
+                btn.classList.remove('active');
+            }
+
+            // إعادة ضبط الاختبار
+            restartQuiz();
+        }
+
+        // دالة إعادة تشغيل الاختبار عند تغيير الترتيب
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            wrongAnswers = []; // تصفير الأخطاء عند إعادة الاختبار
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+                <div class="options" id="options-container"></div>
+                <div class="score-area" id="score-text">النتيجة: 0</div>
+            `;
+            loadQuestion();
+        }
 
         function loadQuestion() {
             const q = questions[currentQuestion];
-            document.getElementById('question-text').innerText = q.t; // استخدام t بدلاً من text
+            // عرض رقم السؤال المرتبط بالسؤال (q.id)
+            document.getElementById('question-text').innerText = q.id + ". " + q.t;
             document.getElementById('q-curr').innerText = currentQuestion + 1;
             
-            // تحديث شريط التقدم
             const progress = ((currentQuestion) / questions.length) * 100;
             document.getElementById('progress-fill').style.width = `${progress}%`;
 
             const container = document.getElementById('options-container');
             container.innerHTML = '';
 
-            q.o.forEach((opt, index) => { // استخدام o بدلاً من options
+            // الحروف العربية للاختيارات
+            const letters = ['أ', 'ب', 'ج', 'د'];
+
+            q.o.forEach((opt, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                btn.innerText = opt;
+                // إضافة الحرف (أ، ب، ج، د) قبل نص الاختيار
+                btn.innerText = `${letters[index]} - ${opt}`;
                 btn.onclick = () => checkAnswer(index, btn);
                 container.appendChild(btn);
             });
@@ -713,7 +863,7 @@
             const allBtns = document.querySelectorAll('.option-btn');
             allBtns.forEach(b => b.disabled = true);
 
-            const correctIndex = questions[currentQuestion].a; // استخدام a بدلاً من answer
+            const correctIndex = questions[currentQuestion].a;
 
             if (selectedIndex === correctIndex) {
                 btnElement.classList.add('correct');
@@ -721,37 +871,69 @@
             } else {
                 btnElement.classList.add('wrong');
                 allBtns[correctIndex].classList.add('correct');
+                
+                // تسجيل الإجابة الخاطئة
+                wrongAnswers.push({
+                    q: questions[currentQuestion].t,
+                    selected: questions[currentQuestion].o[selectedIndex],
+                    correct: questions[currentQuestion].o[correctIndex],
+                    qNum: questions[currentQuestion].id // استخدام الرقم الأصلي
+                });
             }
 
             document.getElementById('score-text').innerText = `النتيجة: ${score} من ${questions.length}`;
 
-            // الانتقال التلقائي بعد ثانية ونصف
             setTimeout(() => {
                 currentQuestion++;
                 if (currentQuestion < questions.length) {
                     loadQuestion();
                 } else {
-                    document.getElementById('progress-fill').style.width = '100%';
-                    document.getElementById('quiz-container').innerHTML = `
-                        <h5>🎉 انتهى الامتحان!
-                            متنسانيش بدعوه حلوه و صلي علي النبي</h5>
-                        <p style="font-size:1.5em; margin: 20px 0;">نتيجتك النهائية: <br> <strong>${score}</strong> من <strong>${questions.length}</strong></p>
-                        <button class="option-btn" onclick="location.reload()" style="background:#764ba2; color:white; border:none;">إعادة الاختبار</button>
-                    `;
+                    showFinalResult();
                 }
             }, 1500);
         }
 
+        function showFinalResult() {
+            document.getElementById('progress-fill').style.width = '100%';
+            
+            let resultHTML = `
+                <h3>🎉 انتهى الامتحان!
+                    متنسانيش بدعوه حلوه و صلي علي النبي</h3>
+                <p style="font-size:1.5em; margin: 20px 0;">نتيجتك النهائية: <br> <strong>${score}</strong> من <strong>${questions.length}</strong></p>
+                <button class="option-btn" onclick="restartQuiz()" style="background:#764ba2; color:white; border:none;">إعادة الاختبار</button>
+            `;
+
+            // زر عرض الأخطاء إذا وجدت
+            if (wrongAnswers.length > 0) {
+                resultHTML += `
+                    <br>
+                    <button class="option-btn" onclick="showMistakes()" style="background:#e74c3c; color:white; border:none; margin-top: 10px;">عرض الإجابات الخاطئة</button>
+                `;
+            }
+
+            document.getElementById('quiz-container').innerHTML = resultHTML;
+        }
+
+        function showMistakes() {
+            let mistakesHTML = `<h3>ملخص الأخطاء</h3><div class="mistakes-container">`;
+            
+            wrongAnswers.forEach(item => {
+                mistakesHTML += `
+                    <div class="mistake-item">
+                        <div class="mistake-q">س${item.qNum}: ${item.q}</div>
+                        <div class="mistake-wrong">❌ إجابتك: ${item.selected}</div>
+                        <div class="mistake-correct">✅ الصح: ${item.correct}</div>
+                    </div>
+                `;
+            });
+
+            mistakesHTML += `</div><button class="option-btn" onclick="restartQuiz()" style="background:#764ba2; color:white; border:none; margin-top: 15px;">إعادة الاختبار</button>`;
+            
+            document.getElementById('quiz-container').innerHTML = mistakesHTML;
+        }
+
         loadQuestion();
     </script>
-
-        <!-- زر واتساب -->
-    <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
-        <svg style="width: 35px; height: 35px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
-        </svg>
-    </a>
-
 
 </body>
 </html>
