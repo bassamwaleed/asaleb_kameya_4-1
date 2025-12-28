@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مادةاساليب كميه و اتخاذ قرار</title>
+    <title>مادة اساليب كميه و اتخاذ قرار</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
@@ -34,7 +34,7 @@
 
         h1 {
             margin-bottom: 30px;
-            font-size: 2.5em;
+            font-size: 2.2em; /* تصغير الخط قليلاً ليتناسب مع العنوان الطويل */
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
@@ -88,7 +88,7 @@
         /* تنسيق الفوتر */
         .footer-text {
             margin-top: 30px;
-            font-size: 1.1em; /* حجم خط مناسب */
+            font-size: 1.1em;
             line-height: 1.6;
             opacity: 0.9;
         }
@@ -101,6 +101,23 @@
         .footer-text p {
             margin: 5px 0 0;
             font-size: 0.9em;
+        }
+
+        /* تنسيق عداد الزوار (مخصص للخلفية الداكنة) */
+        .visitor-counter {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .visitor-label {
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: bold;
         }
 
         /* حاوية واتساب والنص */
@@ -159,7 +176,7 @@
     </div>
 
     <div class="container">
-        <h1>مادةاساليب كميه و اتخاذ قرار</h1>
+        <h1>مادة أساليب كمية واتخاذ قرار</h1>
         
         <!-- رابط لصفحة الاختيارات -->
         <a href="Quiz.html" class="btn">
@@ -168,14 +185,20 @@
 
         <!-- رابط لصفحة الصح والخطأ -->
         <a href="TrueFalse.html" class="btn">
-       <span class="icon">✅</span>  من اول مثال (1) (صفحه 41)
-
+            <span class="icon">✅</span>  من اول مثال (1) (صفحه 41)
         </a>
 
         <!-- النص في الأسفل -->
         <div class="footer-text">
             <h3>تم بواسطه بسام وليد</h3>
             <p>لا تنسونا من دعواتكم ❤️</p>
+        </div>
+
+        <!-- عداد الزوار -->
+        <div class="visitor-counter">
+            <span class="visitor-label">عدد الزوار</span>
+            <!-- تم استخدام معرف خاص بهذه المادة لعد الزيارات بشكل منفصل -->
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=bassam_quant_methods_v1" alt="عدد الزوار" style="height: 20px;">
         </div>
     </div>
 
@@ -191,3 +214,4 @@
 
 </body>
 </html>
+
