@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>امتحان المالية العامة</title>
+    <title>بنك اسئله ماده اساليب كميه</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
@@ -36,31 +36,77 @@
             padding-bottom: 15px;
         }
 
-        /* تنسيق زر الترتيب */
-        .shuffle-btn {
-            background-color: #f0f2f5;
+        .controls-container {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-label {
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .num-input {
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            width: 50px;
+            text-align: center;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1em;
+        }
+
+        .top-btn {
+            background-color: white;
             color: #555;
             border: 1px solid #ddd;
             padding: 8px 15px;
             border-radius: 20px;
             cursor: pointer;
             font-family: 'Tajawal', sans-serif;
-            font-size: 0.9em;
-            margin-bottom: 20px;
+            font-size: 0.85em;
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 5px;
         }
 
-        .shuffle-btn:hover {
+        .top-btn:hover {
             background-color: #e2e6ea;
+            transform: translateY(-2px);
         }
 
-        .shuffle-btn.active {
+        .start-btn {
             background-color: #667eea;
             color: white;
-            border-color: #667eea;
+            border: none;
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            background-color: #5a6fd6;
+            color: white;
+        }
+
+        .toggle-btn.active {
+            background-color: #764ba2;
+            color: white;
+            border-color: #764ba2;
         }
 
         .question-number {
@@ -147,7 +193,6 @@
             color: #764ba2;
         }
 
-        /* تنسيق قائمة الأخطاء */
         .mistakes-container {
             text-align: right;
             max-height: 300px;
@@ -185,7 +230,6 @@
             font-weight: bold;
         }
 
-        /* شريط التقدم */
         .progress-bar {
             height: 6px;
             background: #eee;
@@ -200,7 +244,6 @@
             transition: width 0.3s ease;
         }
 
-        /* حاوية واتساب والنص */
         .whatsapp-container {
             position: fixed;
             bottom: 20px;
@@ -212,7 +255,6 @@
             gap: 8px;
         }
 
-        /* زر الواتساب */
         .whatsapp-float {
             width: 60px;
             height: 60px;
@@ -234,7 +276,6 @@
             transform: scale(1.1);
         }
 
-        /* النص أسفل الزر */
         .whatsapp-text {
             font-size: 11px;
             color: #fff;
@@ -251,10 +292,26 @@
 <body>
 
     <div class="quiz-card">
-        <!-- زر التبديل بين العشوائي والمرتب -->
-        <button id="shuffle-btn" class="shuffle-btn" onclick="toggleShuffle()">
-            <span>🔢</span> ترتيب الأسئلة: مرتب
-        </button>
+        
+        <!-- لوحة التحكم في الأسئلة -->
+        <div class="controls-container">
+            <div class="control-row">
+                <button id="shuffle-btn" class="top-btn toggle-btn" onclick="toggleShuffle()">
+                    <span>🔢</span> الترتيب: عادي
+                </button>
+                <button id="show-num-btn" class="top-btn toggle-btn active" onclick="toggleShowNumbers()">
+                    <span>🆔</span> رقم السؤال: ظاهر
+                </button>
+            </div>
+            <div class="control-row">
+                <span class="control-label">من:</span>
+                <input type="number" id="q-start" class="num-input" min="1" value="1">
+                <span class="control-label">إلى:</span>
+                <input type="number" id="q-end" class="num-input" min="1" value="10">
+                <span style="font-size: 0.8em; color: #777;">(المجموع: <span id="total-available">0</span>)</span>
+                <button onclick="applySettings()" class="top-btn start-btn">بدء</button>
+            </div>
+        </div>
 
         <div class="progress-bar">
             <div class="progress-fill" id="progress-fill"></div>
@@ -285,7 +342,7 @@
 
     <script>
         const originalQuestions = [
-              {
+           {
             "t": "ما هي الخصائص التي يجب أن تتوفر في مسألة البرمجة الخطية؟",
             "o": ["يجب أن تحتوي على دالة هدف غير خطية", "يجب أن تكون القيود خطية فقط", "يمكن أن تحتوي على قيود غير خطية", "يجب أن يكون الهدف هو تعظيم الدالة الهدف فقط"],
             "a": 1
@@ -864,53 +921,89 @@
             "t": "ما هي النقطة التي يتم عندها الوصول إلى الحل الأمثل في البرمجة الخطية؟",
             "o": ["النقاط التي تحقق القيود وتصلح لدالة الهدف", "النقاط التي تتجاوز القيود", "النقاط داخل المنطقة المظللة التي تحتوي على كل الحلول", "النقاط العشوائية داخل النظام"],
             "a": 0
-        },
-        ];
+        },        ];
 
         // تعيين الأرقام التعريفية للأسئلة
         originalQuestions.forEach((q, index) => {
             q.id = index + 1;
         });
 
-        // مصفوفة الأسئلة الحالية (قابلة للتغيير)
+        // تحديث الحد الأقصى للإدخال
+        document.getElementById('q-start').max = originalQuestions.length;
+        document.getElementById('q-end').max = originalQuestions.length;
+        document.getElementById('q-end').value = originalQuestions.length;
+        document.getElementById('total-available').innerText = originalQuestions.length;
+
         let questions = [...originalQuestions];
         let currentQuestion = 0;
         let score = 0;
-        let isRandom = false; // حالة الترتيب
-        let wrongAnswers = []; // لتخزين الإجابات الخاطئة
+        let isRandom = false; 
+        let showNumbers = true; // متغير جديد للتحكم في ظهور الأرقام
+        let wrongAnswers = []; 
 
-        // تحديث العدد الكلي للأسئلة
-        document.getElementById('q-total').innerText = questions.length;
-
-        // دالة تبديل الترتيب
         function toggleShuffle() {
             isRandom = !isRandom;
             const btn = document.getElementById('shuffle-btn');
-            
             if (isRandom) {
-                // خلط الأسئلة
-                for (let i = questions.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [questions[i], questions[j]] = [questions[j], questions[i]];
-                }
-                btn.innerHTML = "<span>🔀</span> ترتيب الأسئلة: عشوائي";
+                btn.innerHTML = "<span>🔀</span> الترتيب: عشوائي";
                 btn.classList.add('active');
             } else {
-                // إعادة الترتيب الأصلي
-                questions = [...originalQuestions];
-                btn.innerHTML = "<span>🔢</span> ترتيب الأسئلة: مرتب";
+                btn.innerHTML = "<span>🔢</span> الترتيب: عادي";
                 btn.classList.remove('active');
             }
+            applySettings();
+        }
 
-            // إعادة ضبط الاختبار
+        // دالة تبديل ظهور رقم السؤال
+        function toggleShowNumbers() {
+            showNumbers = !showNumbers;
+            const btn = document.getElementById('show-num-btn');
+            if (showNumbers) {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: ظاهر";
+                btn.classList.add('active');
+            } else {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: مخفي";
+                btn.classList.remove('active');
+            }
+            // تحديث السؤال الحالي فوراً
+            if (questions.length > 0 && currentQuestion < questions.length) {
+                updateQuestionDisplay();
+            }
+        }
+
+        function applySettings() {
+            const startInput = document.getElementById('q-start');
+            const endInput = document.getElementById('q-end');
+            let start = parseInt(startInput.value);
+            let end = parseInt(endInput.value);
+            
+            if (isNaN(start) || start < 1) start = 1;
+            if (isNaN(end) || end > originalQuestions.length) end = originalQuestions.length;
+            if (start > end) start = end;
+
+            startInput.value = start;
+            endInput.value = end;
+
+            let selectedQuestions = originalQuestions.slice(start - 1, end);
+
+            if (isRandom) {
+                for (let i = selectedQuestions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [selectedQuestions[i], selectedQuestions[j]] = [selectedQuestions[j], selectedQuestions[i]];
+                }
+            }
+
+            questions = selectedQuestions;
+            document.getElementById('q-total').innerText = questions.length;
             restartQuiz();
         }
 
-        // دالة إعادة تشغيل الاختبار عند تغيير الترتيب
         function restartQuiz() {
             currentQuestion = 0;
             score = 0;
-            wrongAnswers = []; // تصفير الأخطاء عند إعادة الاختبار
+            wrongAnswers = []; 
+            if (questions.length === 0) return;
+
             document.getElementById('quiz-container').innerHTML = `
                 <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
                 <div class="options" id="options-container"></div>
@@ -919,10 +1012,19 @@
             loadQuestion();
         }
 
-        function loadQuestion() {
+        // دالة مساعدة لتحديث نص السؤال فقط
+        function updateQuestionDisplay() {
             const q = questions[currentQuestion];
-            // عرض رقم السؤال المرتبط بالسؤال (q.id)
-            document.getElementById('question-text').innerText = q.id + ". " + q.t;
+            const qTextElement = document.getElementById('question-text');
+            if (showNumbers) {
+                qTextElement.innerText = q.id + ". " + q.t;
+            } else {
+                qTextElement.innerText = q.t;
+            }
+        }
+
+        function loadQuestion() {
+            updateQuestionDisplay();
             document.getElementById('q-curr').innerText = currentQuestion + 1;
             
             const progress = ((currentQuestion) / questions.length) * 100;
@@ -930,14 +1032,11 @@
 
             const container = document.getElementById('options-container');
             container.innerHTML = '';
-
-            // الحروف العربية للاختيارات
             const letters = ['أ', 'ب', 'ج', 'د'];
 
-            q.o.forEach((opt, index) => {
+            questions[currentQuestion].o.forEach((opt, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                // إضافة الحرف (أ، ب، ج، د) قبل نص الاختيار
                 btn.innerText = `${letters[index]} - ${opt}`;
                 btn.onclick = () => checkAnswer(index, btn);
                 container.appendChild(btn);
@@ -947,7 +1046,6 @@
         function checkAnswer(selectedIndex, btnElement) {
             const allBtns = document.querySelectorAll('.option-btn');
             allBtns.forEach(b => b.disabled = true);
-
             const correctIndex = questions[currentQuestion].a;
 
             if (selectedIndex === correctIndex) {
@@ -956,13 +1054,11 @@
             } else {
                 btnElement.classList.add('wrong');
                 allBtns[correctIndex].classList.add('correct');
-                
-                // تسجيل الإجابة الخاطئة
                 wrongAnswers.push({
                     q: questions[currentQuestion].t,
                     selected: questions[currentQuestion].o[selectedIndex],
                     correct: questions[currentQuestion].o[correctIndex],
-                    qNum: questions[currentQuestion].id // استخدام الرقم الأصلي
+                    qNum: questions[currentQuestion].id 
                 });
             }
 
@@ -980,28 +1076,23 @@
 
         function showFinalResult() {
             document.getElementById('progress-fill').style.width = '100%';
-            
             let resultHTML = `
                 <h3>🎉 انتهى الامتحان!
                     متنسانيش بدعوه حلوه و صلي علي النبي</h3>
                 <p style="font-size:1.5em; margin: 20px 0;">نتيجتك النهائية: <br> <strong>${score}</strong> من <strong>${questions.length}</strong></p>
                 <button class="option-btn" onclick="restartQuiz()" style="background:#764ba2; color:white; border:none;">إعادة الاختبار</button>
             `;
-
-            // زر عرض الأخطاء إذا وجدت
             if (wrongAnswers.length > 0) {
                 resultHTML += `
                     <br>
                     <button class="option-btn" onclick="showMistakes()" style="background:#e74c3c; color:white; border:none; margin-top: 10px;">عرض الإجابات الخاطئة</button>
                 `;
             }
-
             document.getElementById('quiz-container').innerHTML = resultHTML;
         }
 
         function showMistakes() {
             let mistakesHTML = `<h3>ملخص الأخطاء</h3><div class="mistakes-container">`;
-            
             wrongAnswers.forEach(item => {
                 mistakesHTML += `
                     <div class="mistake-item">
@@ -1011,15 +1102,12 @@
                     </div>
                 `;
             });
-
             mistakesHTML += `</div><button class="option-btn" onclick="restartQuiz()" style="background:#764ba2; color:white; border:none; margin-top: 15px;">إعادة الاختبار</button>`;
-            
             document.getElementById('quiz-container').innerHTML = mistakesHTML;
         }
 
-        loadQuestion();
+        applySettings();
     </script>
 
 </body>
 </html>
-
